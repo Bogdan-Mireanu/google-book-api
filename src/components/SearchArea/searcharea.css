@@ -1,0 +1,47 @@
+input{
+     border-radius: 6%;
+     border-style:solid;
+     text-shadow:2px 32px 4px rgba(42,42,42,.75); 
+     padding:8px; font-size:16px; 
+     text-align:left;  
+     background-color:#fcfcfc; 
+     border:1px solid grey;
+     box-shadow: 0 0 6px #aaa;  
+}
+input:focus { 
+    outline:none; 
+} 
+button {
+    margin-left: 10px;
+    box-shadow: 0px 1px 0px 0px #fff6af;
+	background:linear-gradient(to bottom, #ffec64 5%, #ff9524 100%);
+	background-color:#ffec64;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+    text-shadow:0px 1px 0px #ffee66;
+    outline:none;
+}
+button:hover {
+	background:linear-gradient(to bottom, #ff9524 5%, #ffec64 100%);
+	background-color:#ff9524;
+}
+button,button.buy:active {
+	position:relative;
+	top:1px;
+}
+button.buy{
+    background:linear-gradient(to bottom, #f0f0ec 5%, #a3a1a1 100%);
+    border: 1px solid grey;
+}
+button.buy:hover{
+    background:linear-gradient(to bottom, #a3a1a1 5%, #f0f0ec 100%);
+}
+

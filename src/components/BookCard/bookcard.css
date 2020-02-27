@@ -1,0 +1,15 @@
+.card-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 15px;
+    border:1px solid grey;
+    width: 150px;
+    height: 400px;
+    padding: 10px 10px 0 10px;
+    box-shadow: 0 0 10px #aaa;
+}
+img{
+    border: 2px solid gray;
+    max-height: 200px;
+}
