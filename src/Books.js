@@ -21,7 +21,7 @@ export default class Books extends Component{
 
    searchBook = (e) => {
        e.preventDefault();
-       axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"&key=AIzaSyDGsjWlMM4w2y0sFURdaxjU4fXtUvB5qMk&maxResults=15")
+       axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"")
        .then(data => {
           this.setState({
               books:[...data.data.items]
