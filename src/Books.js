@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import { delay } from './utils';
+import { CONFIG } from './CONFIG';
 import SearchArea from './components/SearchArea/SearchArea';
 import BookList from './components/BookList/BookList';
 import CartItem from './components/CartItem/CartItem';
-import Loader from './components/Loader/Loader'
+import Loader from './components/Loader/Loader';
 import axios from 'axios';
 import './books.css';
 
@@ -14,49 +16,94 @@ export default class Books extends Component{
         this.state={
             books:[],
             searchField: '',
-            loader1: false
-        }
+            loaded: false,
+            loading: false,
+            hasError: false,  
+        };
     }
     
 
    searchBook = (e) => {
        e.preventDefault();
-       axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"")
-       .then(data => {
-          this.setState({
-              books:[...data.data.items]
-          });
-      }); 
-       if(this.state.books === [])
-       this.setState({loader1:true})
+        this.setState({
+            loading: true
+        });
+
+        this.getBooks()
+            .then((delay(CONFIG.APP_DELAY)))
+            .then((response) => {
+                this.setState({
+                    books: [...response.data.items],
+                    loading: false,
+                    loaded: true
+                });
+            })
+            .catch((err)=> {
+                console.log({err});
+                this.setState({
+                    books: [],
+                    loaded: true,
+                    loading: false,
+                    hasError: true,
+                    cartList:[]
+                });
+            });
+        if (this.state.books === [])this.setState({loaded:true, loading:false,hasError:false});
+
+
+    };
+
+        getBooks(){
+        return axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"");
     }
 
-
     handleSearch = (e) => {
-        
         this.setState({
             searchField: e.target.value
         })
     }
 
+
     render(){
-       if(!this.state.loader1)
+       if(this.state.loading)
+          return (
+                <div>
+                <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch}/> 
+                <Loader/>
+                </div>
+            );
+        if(this.state.loaded && this.state.hasError)
+            return (
+                <div>
+                <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch}/> 
+                <div>Something went wrong</div>
+                </div>
+            );
+        if (this.state.loaded && !this.state.books.length) {
+            return (
+                <div>
+                    <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
+                    No results
+                </div>
+            );
+        }
+        if (this.state.loading && this.state.books.length) {
+            return (
+                <div>
+                    <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
+                    <BookList books={this.state.books} />
+                    <CartItem />
+                </div>
+            );
+        }
+
         return (
             <div>
-            <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch}/>
-            <BookList books={this.state.books}/>
-            <CartItem/>
+                <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
+                <BookList books={this.state.books} />
+                <CartItem/>
             </div>
         );
-        else 
-        return (
-            <div>
-            <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch}/>
-            <Loader/>
-            <BookList books={this.state.books}/>
-            <CartItem/>
-            </div>
-        )
     }
-};
+}
 
