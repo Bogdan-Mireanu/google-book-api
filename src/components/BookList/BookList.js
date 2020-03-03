@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import BookCard from '../BookCard/BookCard';
 import './booklist.css';
+import CartItem from '../CartItem/CartItem';
 
 
 
@@ -9,17 +10,16 @@ export default class BookList extends Component {
         super(props);
         this.state={
             cartList:[],
-             
         };
     }
   
-    addToCart(bookId){
-        const bookToAdd = this.props.books.find(book => book.bookId === bookId);
+    addToCart = (bookId) => {
+        const bookToAdd = this.props.books.find(book=> book.id === bookId);
         if(bookToAdd){
             return undefined;
         }
         const cartUpdate = this.state.cartList.slice();
-        const bookAlreadyAdded = cartUpdate.find((item,i)=>item.id === bookId);
+        const bookAlreadyAdded = cartUpdate.find(item=>item.id === bookId);
 
         if(bookAlreadyAdded){
             bookAlreadyAdded.count++;
@@ -29,24 +29,38 @@ export default class BookList extends Component {
             cartUpdate.push(newBook);
         }
         this.setState({cartList:cartUpdate});
+        console.log(bookId);
+        
     }
 
     render(){
         
         return (
-            <div className='list'> 
+            <>
+            <div className='book-list'> 
                     {this.props.books.map((book,i) => {
                      return <BookCard
-                             books={this.props.books}
                              addToCart={this.addToCart}
                              key={i+'a'}
-                             bookId={i+1}
+                             bookId={book.id}
                              image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : null}
                              author={book.volumeInfo.authors ? book.volumeInfo.authors.slice(0, 1) : []}
                              title={book.volumeInfo.title.substring(0, 38)}
                             />
                     })}
             </div>
+            <div className='cart-list'>
+                    {this.state.cartList.map((cart,i)=>{
+                      return <CartItem
+                              
+                              key={i+'b'}
+                              bookId={cart.id}
+                              title={cart.title}
+                              author={cart.author}
+                             />
+                    })}
+            </div>
+            </>
         )
     }
 };

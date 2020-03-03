@@ -3,7 +3,6 @@ import { delay } from './utils';
 import { CONFIG } from './CONFIG';
 import SearchArea from './components/SearchArea/SearchArea';
 import BookList from './components/BookList/BookList';
-import CartItem from './components/CartItem/CartItem';
 import Loader from './components/Loader/Loader';
 import axios from 'axios';
 import './books.css';
@@ -45,7 +44,6 @@ export default class Books extends Component{
                     loaded: true,
                     loading: false,
                     hasError: true,
-                    cartList:[]
                 });
             });
         if (this.state.books === [])this.setState({loaded:true, loading:false,hasError:false});
@@ -63,7 +61,7 @@ export default class Books extends Component{
         })
     }
 
-
+ 
     render(){
        if(this.state.loading)
           return (
@@ -92,7 +90,6 @@ export default class Books extends Component{
                 <div>
                     <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
                     <BookList books={this.state.books} />
-                    <CartItem />
                 </div>
             );
         }
@@ -100,8 +97,7 @@ export default class Books extends Component{
         return (
             <div>
                 <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
-                <BookList books={this.state.books} />
-                <CartItem/>
+                <BookList books={this.state.books}/>
             </div>
         );
     }

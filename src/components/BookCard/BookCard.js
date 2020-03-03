@@ -12,7 +12,7 @@ export default class BookCard extends Component {
               <span>{this.props.title}</span>
               <span>{this.props.author}</span>
               <button type='button'>Add to wishlist</button>
-              <button type='button'onClick={()=>this.props.addToCart(this.props.bookId)} className="buy">Buy</button>
+              <button type='button' onClick={()=>this.props.addToCart(this.props.bookId)} className="buy">Buy</button>
             </div>
         )
     }

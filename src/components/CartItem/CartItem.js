@@ -7,8 +7,8 @@ export default class CartItem extends Component{
     render(){
         return (
            <div className="cart-container">
-               <span>{this.props.title}</span>
-               <span>{this.props.author}</span>
+              <span>{this.props.title}</span>
+              <span>{this.props.author}</span>
            </div>
         )
     }
