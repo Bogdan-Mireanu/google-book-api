@@ -6,6 +6,7 @@ import BookList from './components/BookList/BookList';
 import Loader from './components/Loader/Loader';
 import axios from 'axios';
 import './books.css';
+import CartItem from './components/CartItem/CartItem';
 
 
 
@@ -52,7 +53,7 @@ export default class Books extends Component{
     };
 
         getBooks(){
-        return axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"");
+        return axios.get("https://www.googleapis.com/books/v1/volumes?q="+this.state.searchField+"&key=AIzaSyDGsjWlMM4w2y0sFURdaxjU4fXtUvB5qMk&maxResults=5");
     }
 
     handleSearch = (e) => {
@@ -90,6 +91,7 @@ export default class Books extends Component{
                 <div>
                     <SearchArea searchBook={this.searchBook} handleSearch={this.handleSearch} />
                     <BookList books={this.state.books} />
+                    <CartItem/>
                 </div>
             );
         }
